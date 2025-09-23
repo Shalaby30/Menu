@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>قائمة الطعام</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #e63946;
+            border-bottom: 2px solid #e63946;
+            padding-bottom: 5px;
+            /*  Added category counter */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category {
+            margin-top: 30px;
+        }
+
+        .item-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .item-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1d3557;
+        }
+	p {
+	text-align: center
+	}
+        .item-content {
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        /*  Enhanced search box with filters */
+        .search-container {
+            text-align: center;
+        }
+
+        #searchInput {
+            padding: 12px;
+            width: 60%;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #e63946;
+        }
+
+        /*  Added category filter buttons */
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .filter-btn:hover {
+            background: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+
+        .filter-btn.active {
+            background: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+
+        /*  Added search results info */
+        .search-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        /*  Added clear search button */
+        .search-controls {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .clear-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #999;
+            display: none;
+        }
+
+        .clear-btn:hover {
+            color: #e63946;
+        }
+
+        /*  Added category counter styling */
+        .category-count {
+            background: #e63946;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+
+        /*  Added hidden category styling */
+        .category.hidden {
+            display: none;
+        }
+
+        /*  Added highlight for search results */
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>قائمة الطعام</h1>
+
+    <!--  Enhanced search container with filters -->
+    <div class="search-container">
+        <div class="search-controls">
+            <input type="text" id="searchInput" placeholder="ابحث عن صنف بالاسم...">
+            <button class="clear-btn" id="clearBtn">×</button>
+        </div>
+
+    </div>
+
+    <!-- الماريا -->
+    <div class="category" data-category="الماريا">
+        <h2>الماريا </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">ماريا فراخ</div>
+                <div class="item-content"> شاورما فراخ + تومية سبايسي</div>
+            </div>
+            <div class="item">
+                <div class="item-title">ماريا لحم</div>
+                <div class="item-content"> شاورما لحمة + طحينة + بصل + بقدونس + دبس رمان + خس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">ماريا ميكس</div>
+                <div class="item-content">نص فراخ بصوص تومية + نص لحمة بصوص طحينة ودبس رمان</div>
+            </div>
+            <div class="item">
+                <div class="item-title">ماريا تشيزي</div>
+                <div class="item-content">شاورما فراخ + تومية سبايسي + موتزاريلا + صوص شيدر</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الساندويتشات -->
+    <div class="category" data-category="الساندويتشات">
+        <h2>الساندويتشات </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">شاورما فراخ</div>
+                <div class="item-content">تومية + خيار مخلل</div>
+            </div>
+            <div class="item">
+                <div class="item-title">شاورما لحمة</div>
+                <div class="item-content">طحينة + لفت + بصل + بقدونس + دبس رمان + سماق</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كرسبي</div>
+                <div class="item-content">مايونيز + شيدر + خس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">سوبريم كرسبي</div>
+                <div class="item-content">مايونيز + شيدر + خس + باربكيو + رومي مدخن</div>
+            </div>
+            <div class="item">
+                <div class="item-title">زينجر</div>
+                <div class="item-content">مايونيز سبايسي + شيدر + خس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">سوبريم زينجر</div>
+                <div class="item-content">مايونيز سبايسي + شيدر + خس + باربكيو + رومي مدخن</div>
+            </div>
+            <div class="item">
+                <div class="item-title">ديناصور</div>
+                <div class="item-content">قطع كرسبي + مايونيز + باربكيو + شيدر + رومي مدخن + خس + طماطم</div>
+            </div>
+            <div class="item">
+                <div class="item-title">برجر</div>
+                <div class="item-content"> صوص بيج برجر + بصل + طماطم + خس + خيار مخلل</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- البروستد -->
+    <div class="category" data-category="البروستد">
+        <h2>البروستد </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">فرخة بروستد كاملة</div>
+                <div class="item-content">8 قطع ( 2 صدر - 2 فخد - 4 دبوس ) + تومية وسط + كلوسلو + بطاطس + عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">نص فرخه بروستد (وجبه بيك الكرم)</div>
+                <div class="item-content">4 قطع ( صدر - فخد - 2 دبوس ) + تومية صغيرة + كلوسلو صغيرة + بطاطس + عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبة قطعتين بروستد</div>
+                <div class="item-content">¼ فرخة (صدر أو ورك) + تومية + عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 1</div>
+                <div class="item-content">(2 فخد + 2 دبوس) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 2</div>
+                <div class="item-content">(4 فخد ) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 3</div>
+                <div class="item-content">(4 دبوس) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 4</div>
+                <div class="item-content">(صدر + فخد + 2 دبوس ) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 5</div>
+                <div class="item-content">(2 صدر + 2 دبوس) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 6</div>
+                <div class="item-content">(2 صدر + 2 فخد) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه القرمشه 7</div>
+                <div class="item-content">(صدر + 2 دبوس + 2 كرسبي) + بطاطس + توميه + كلوسلو + 1 كيزر ميني</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الشواية -->
+    <div class="category" data-category="الشواية">
+        <h2>الشواية </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">فرخة شواية سوري</div>
+                <div class="item-content">فرخة مشوية + رز + بطاطس + تومية + مخلل + عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">نص فرخة شواية سوري</div>
+                <div class="item-content">½ فرخة + رز + بطاطس + تومية + مخلل + عيش</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفتات -->
+    <div class="category" data-category="الفتات">
+        <h2>الفتات </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">فتة فراخ</div>
+                <div class="item-content">رز بسمتي + عيش محمص + تومية + شاورما فراخ</div>
+            </div>
+            <div class="item">
+                <div class="item-title">فتة لحمة</div>
+                <div class="item-content">رز بسمتي + عيش محمص + طحينة + شاورما لحمة</div>
+            </div>
+            <div class="item">
+                <div class="item-title">ريزو الكرم</div>
+                <div class="item-content">رز بسمتي + قطع كرسبي + صوص</div>
+            </div>
+            <div class="item">
+                <div class="item-title">فتة ميكس</div>
+                <div class="item-content">رز بسمتي + عيش محمص + نصفها فراخ + نصفها لحمة</div>
+            </div>
+            <div class="item">
+                <div class="item-title">قنبلة الكرم</div>
+                <div class="item-content">رز بسمتي + نصف شاورما فراخ + نصف كرسبي بصوص ريزو</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الكريبات -->
+    <div class="category" data-category="الكريبات">
+        <h2>الكريبات </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">كريب شاورما فراخ</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + تومية + جبن + شاورما فراخ</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب شاورما لحمة</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + طحينة + جبن + شاورما لحمة</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب بسطرمة</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + بسطرمة</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب بطاطس</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + بطاطس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب سوسيس</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + سوسيس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب سدق</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + سدق</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب مشكل لحوم</div>
+                <div class="item-content">سدق + بسطرمة + شاورما لحمة + سوسيس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب كرسبي</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + كرسبي</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب زنجر</div>
+                <div class="item-content">فلفل + طماطم + زيتون + كاتشب + مايونيز سبايسي + جبن + زنجر</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب ماجنم</div>
+                <div class="item-content">شاورما فراخ + هالبينو + صوص شيدر + مايونيز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب مشكل فراخ</div>
+                <div class="item-content">شاورما فراخ + كرسبي + صوص شيدر + تومية + باربكيو</div>
+            </div>
+            <div class="item">
+                <div class="item-title">كريب شوكولاتة</div>
+                <div class="item-content">شوكولاتة </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الوجبات -->
+    <div class="category" data-category="الوجبات">
+        <h2>الوجبات </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">وجبة شاورما عربي سينجل</div>
+                <div class="item-content"> ساندويتش XL سورى متقطع 5 قطع + عيش محمص + توميه + بطاطس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبة شاورما عربي دبل</div>
+                <div class="item-content"> 2 ساندويتش XL سورى متقطع 10 قطع + عيش محمص + توميه + بطاطس</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبة كرسبي/زينجر</div>
+                <div class="item-content">5 قطع + بطاطس + تومية + كلوسلو + عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">بوكس الكرم</div>
+                <div class="item-content">5 ساندويتش XL (فراخ/لحمة/ميكس) متقطعين 25 قطعه + بطاطس + تومية + عيش محمص
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">بوكس الجوكر</div>
+                <div class="item-content"> 2 ساندويتش سورى اكس لارج مقطع 10 قطع + 4 قطع كرسبي + بطاطس + عيش محمص +
+                    صوصات</div>
+            </div>
+            <div class="item">
+                <div class="item-title">بوكس الصحاب</div>
+                <div class="item-content">4 ساندويتش كايزر (فراخ/لحمة/ميكس) + بطاطس + تومية + عيش محمص</div>
+            </div>
+            <div class="item">
+                <div class="item-title">بوكس المعلم</div>
+                <div class="item-content">10 سندوتشات (كل واحد 10 سم )  + بطاطس + توميه + عيش محمص</div>
+            </div>
+            <div class="item">
+                <div class="item-title">بوكس ابن المعلم</div>
+                <div class="item-content">4 سندوتشات (كل واحد 10 سم )  + بطاطس + توميه + عيش محمص</div>
+            </div>
+        </div>
+    </div>
+    <!-- مشويات -->
+    <div class="category" data-category="مشويات">
+        <h2>مشويات</h2>
+<p>(فيصل/ الف مسكن/ زهراء المعادي/ طلعت/ اكتوبر/ المنصوره/ المنتزه/ الدليفري/ سوتر) <p/>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">فرخه تكا </div>
+                <div class="item-content">فرخة مشوية علي فحم بالعضم + رز + بطاطس + تومية + مخلل + 4 عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">نص فرخة تكا</div>
+                <div class="item-content">½ فرخة مشوية علي فحم بالعضم + رز + بطاطس + تومية + مخلل + عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">ربع فرخة تكا</div>
+                <div class="item-content">ربع فرخة مشوية علي فحم بالعضم (صدر او ررك) + رز + بطاطس + تومية + مخلل + عيش
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="item-title">فرخه مخلي </div>
+                <div class="item-content">فرخة مشوية علي فحم مخلي من العضم + رز + بطاطس + تومية + مخلل + 4 عيش</div>
+            </div>
+            <div class="item">
+                <div class="item-title">نص فرخة مخلي</div>
+                <div class="item-content">½ فرخة مشوية علي فحم مخلي من العضم + رز + بطاطس + تومية + مخلل + عيش</div>
+            </div>
+
+            <div class="item">
+                <div class="item-title">وجبه كباب</div>
+                <div class="item-content">2 سيخ كباب + رز + بطاطس + 1 عيش + مخلل + توميه</div>
+            </div>
+            <div class="item">
+                <div class="item-title">½ كفته لحم</div>
+                <div class="item-content">4 سيخ كفته + بطاطس + 2 عيش + مخلل + توميه + طحينه</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه كفته لحم</div>
+                <div class="item-content">2 سيخ كفته + رز + بطاطس + 1 عيش + مخلل + توميه</div>
+            </div>
+            <div class="item">
+                <div class="item-title">½ مشكل كباب وكفته لحم</div>
+                <div class="item-content">2 سيخ كفته لحم + 2 سيخ كباب + بطاطس + 2 عيش + مخلل + توميه + طحينه</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه مشكل كباب وكفته لحم</div>
+                <div class="item-content"> سيخ كفته لحم + سيخ كباب + بطاطس + 1 عيش + مخلل + توميه + رز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">½ ميكس جريل لحم</div>
+                <div class="item-content">2 سيخ كفته لحم + سيخ كباب + سيخ شيش طاووق + بطاطس + 2 عيش + مخلل + توميه +
+                    طحينه</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه ميكس جريل لحم</div>
+                <div class="item-content"> سيخ كفته لحم + سيخ كباب + سيخ شيش طاووق + بطاطس + 1 عيش + مخلل + توميه + رز
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">½ كفته فراخ</div>
+                <div class="item-content">4 سيخ كفته فراخ + بطاطس + 2 عيش + مخلل + توميه + طحينه</div>
+            </div>
+            <div class="item">
+                <div class="item-title">وجبه كفته فراخ</div>
+                <div class="item-content">2 سيخ كفته فراخ + رز + بطاطس + 1 عيش + مخلل + توميه</div>
+            </div>
+        </div>
+        <!-- الصواني -->
+
+    </div>
+
+    <div class="category" data-category="الصواني">
+        <h2>الصواني </h2>
+        <div class="item-list">
+            <div class="item">
+                <div class="item-title">صينية الاكيله (1) *</div>
+                <div class="item-content">2 ورك مشوي تكا + 200 جم شاورما فراخ + رز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الاكيله (3) *</div>
+                <div class="item-content">2 سيخ شيش طاووق + 120 جم شاورما + رز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الاكيله (4) *</div>
+                <div class="item-content">2 ورك مشوي تكا + 2 سيخ شيش + 2 كفتة + رز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الأبطال</div>
+                <div class="item-content">½ فرخة شواية + 750 جم شاورما فراخ + كيلو رز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الأسود</div>
+                <div class="item-content">½ فرخة شواية + 4 كرسبي + 4 بروستد (2 فخد + 2 دبوس) + شاورما فراخ + رز +
+                    بطاطس
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الوحوش</div>
+                <div class="item-content">4 كرسبي + 4 بروستيد + 4 ساندوتشات فراخ إكس لارج متقطعين عربي + بطاطس
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الحريفة *</div>
+                <div class="item-content">فرخة مشوية تكا + ½ كيلو كفتة + ½ كيلو شيش + رز</div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية مكس الماريا</div>
+                <div class="item-content">٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٣ قطع كرسبي + ٣ قطع بروستد
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية الكرسبي</div>
+                <div class="item-content">12 قطعة كرسبي + ½ كيلو رز بسمتي + ¼ كيلو بطاطس + تومية + 2 كيس عيش
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية البروستد</div>
+                <div class="item-content">½ كيلو رز + 10 قطع بروستيد (فخد ودبوس) + ¼ كيلو بطاطس + تومية + 2
+                    كيس
+                    عيش </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية مكس القرمشة</div>
+                <div class="item-content">5 كرسبي + 5 بروستيد + ½ كيلو رز بسمتي + ¼ كيلو بطاطس + تومية + 2 كيس عيش
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية مكس شاورما</div>
+                <div class="item-content">٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٦ قطع عربي فراخ + ٦ قطع عربي
+                    لحم
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية المشاوي *</div>
+                <div class="item-content">5 ورك مشوي تكا + رز بسمتي + بطاطس + طحينة</div>
+            </div>
+            <div class="item">
+                <div class="item-title">صينية مكس مشاوي *</div>
+                <div class="item-content">4 ورك مشوي + 2 كفتة + بطاطس + رز + طحينة</div>
+            </div>
+        </div>
+
+        <script>
+            const searchInput = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearBtn');
+            const searchInfo = document.getElementById('searchInfo');
+            const items = document.querySelectorAll('.item');
+            const categories = document.querySelectorAll('.category');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            let currentFilter = 'all';
+
+            // Search input
+            searchInput.addEventListener('input', function () {
+                const query = this.value.toLowerCase().trim();
+                clearBtn.style.display = query ? 'block' : 'none';
+                performSearch(query);
+            });
+
+            // Clear search
+            clearBtn.addEventListener('click', function () {
+                searchInput.value = '';
+                clearBtn.style.display = 'none';
+                performSearch('');
+            });
+
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    currentFilter = this.dataset.category;
+                    performSearch(searchInput.value.toLowerCase().trim());
+                });
+            });
+
+            function performSearch(query) {
+                let visibleItems = 0;
+                let visibleCategories = 0;
+
+                categories.forEach(category => {
+                    const categoryName = category.dataset.category;
+                    const categoryItems = category.querySelectorAll('.item');
+                    let categoryVisibleItems = 0;
+
+                    const showCategory = currentFilter === 'all' || currentFilter === categoryName;
+
+                    if (showCategory) {
+                        categoryItems.forEach(item => {
+                            const title = item.querySelector('.item-title').textContent.toLowerCase();
+                            const content = item.querySelector('.item-content').textContent.toLowerCase();
+
+                            if (!query || title.includes(query) || content.includes(query)) {
+                                item.style.display = 'block';
+                                categoryVisibleItems++;
+                                visibleItems++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+
+                        if (categoryVisibleItems > 0) {
+                            category.classList.remove('hidden');
+                            visibleCategories++;
+                        } else {
+                            category.classList.add('hidden');
+                        }
+                    } else {
+                        category.classList.add('hidden');
+                        categoryItems.forEach(item => item.style.display = 'none');
+                    }
+                });
+
+                updateSearchInfo(query, visibleItems, visibleCategories);
+            }
+
+            function updateSearchInfo(query, visibleItems, visibleCategories) {
+                let message = '';
+
+                if (query) {
+                    message = `تم العثور على ${visibleItems} صنف`;
+                    if (currentFilter !== 'all') {
+                        message += ` في فئة ${currentFilter}`;
+                    }
+                } else if (currentFilter !== 'all') {
+                    message = `عرض فئة ${currentFilter}`;
+                } else {
+                    message = 'جميع الأصناف متاحة';
+                }
+
+                searchInfo.textContent = message;
+            }
+
+            // أول تشغيل
+            performSearch('');
+        </script>
+
+
+</body>
+
+</html>
