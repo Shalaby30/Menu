@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" style="height: 100%;">
 
 <head>
     <meta charset="UTF-8">
@@ -293,7 +293,17 @@
     </style>
 </head>
 
-<body>
+<body style="height: 100%; margin: 0;">
+    <div id="passwordOverlay"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; display: flex; justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+            <input type="password" id="passwordInput" style="padding: 10px; margin: 10px 0; width: 200px;"
+                placeholder="input">
+            <button onclick="checkPassword()"
+                style="padding: 10px 20px; background: #e63946; color: white; border: none; border-radius: 5px; cursor: pointer;">دخول</button>
+            <p id="errorMsg" style="color: red; margin-top: 10px; display: none;"></p>
+        </div>
+    </div>
 
     <h1>قائمة الطعام</h1>
 
@@ -315,6 +325,29 @@
     </div>
 
     <script>
+        // Password protection
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === 'MBDTF') {
+                document.getElementById('passwordOverlay').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // Add event listener for Enter key
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            document.body.style.overflow = 'hidden';
+        });
+
         const menuData = {
             "categories": [
                 {
@@ -1021,7 +1054,7 @@
                                 {
                                     "size": "صدر",
                                     "price": 115
-                                },{
+                                }, {
                                     "size": "ورك",
                                     "price": 100
                                 }
@@ -1056,7 +1089,7 @@
                                     "price": 260
                                 }
                             ]
-                        },{
+                        }, {
                             "title": "½ كباب",
                             "ingredients": "4 سيخ كباب + رز + بطاطس + 1 عيش + مخلل + توميه",
                             "prices": [
@@ -1086,7 +1119,7 @@
                                 }
                             ]
                         },
-			{
+                        {
                             "title": "½ شيش طاووك",
                             "ingredients": "4 سيخ شيش طاووك+ بطاطس + 2 عيش + مخلل + توميه + طحينه",
                             "prices": [
@@ -1203,7 +1236,7 @@
                         },
                         {
                             "title": "صينية الأبطال",
-                            "ingredients": "½ فرخة شواية + 750 جم شاورما فراخ + كيلو رز",
+                            "ingredients": "½ فرخة شواية + 750 جم شاورما فراخ + كيلو رز + بطاطس",
                             "prices": [
                                 {
                                     "size": "صينية",
@@ -1233,7 +1266,7 @@
                         },
                         {
                             "title": "صينية الحريفة *",
-                            "ingredients": "فرخة مشوية تكا + ½ كيلو كفتة + ½ كيلو شيش + رز",
+                            "ingredients": "فرخة مشوية تكا + ½ كيلو كفتة + ½ كيلو شيش + رز + بطاطس",
                             "prices": [
                                 {
                                     "size": "صينية",
@@ -1243,7 +1276,7 @@
                         },
                         {
                             "title": "صينية مكس الماريا",
-                            "ingredients": "٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٣ قطع كرسبي + ٣ قطع بروستد",
+                            "ingredients": "٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٣ قطع كرسبي + ٣ قطع بروستد + بطاطس + تومية كبيرة",
                             "prices": [
                                 {
                                     "size": "صينية",
@@ -1283,7 +1316,7 @@
                         },
                         {
                             "title": "صينية مكس شاورما",
-                            "ingredients": "٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٦ قطع عربي فراخ + ٦ قطع عربي لحم",
+                            "ingredients": "٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٦ قطع عربي فراخ + ٦ قطع عربي لحم + بطاطس + تومية كبيرة",
                             "prices": [
                                 {
                                     "size": "صينية",
@@ -1313,7 +1346,7 @@
                         }
                     ]
                 },
-{
+                {
                     "name": "كبسه",
                     "items": [
                         {
