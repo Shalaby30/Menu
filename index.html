@@ -294,7 +294,7 @@
 </head>
 
 <body style="height: 100%; margin: 0;">
-    <div id="passwordOverlay"
+    <!-- <div id="passwordOverlay"
         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; display: flex; justify-content: center; align-items: center; z-index: 1000;">
         <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
             <input type="password" id="passwordInput" style="padding: 10px; margin: 10px 0; width: 200px;"
@@ -303,7 +303,7 @@
                 style="padding: 10px 20px; background: #e63946; color: white; border: none; border-radius: 5px; cursor: pointer;">دخول</button>
             <p id="errorMsg" style="color: red; margin-top: 10px; display: none;"></p>
         </div>
-    </div>
+    </div> -->
 
     <h1>قائمة الطعام</h1>
 
@@ -325,28 +325,28 @@
     </div>
 
     <script>
-        // Password protection
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === 'MBDTF') {
-                document.getElementById('passwordOverlay').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
-            }
-        }
+        // // Password protection
+        // function checkPassword() {
+        //     const password = document.getElementById('passwordInput').value;
+        //     if (password === 'MBDTF') {
+        //         document.getElementById('passwordOverlay').style.display = 'none';
+        //         document.body.style.overflow = 'auto';
+        //     } else {
+        //         document.getElementById('errorMsg').style.display = 'block';
+        //         document.getElementById('passwordInput').value = '';
+        //         document.getElementById('passwordInput').focus();
+        //     }
+        // }
 
         // Add event listener for Enter key
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('passwordInput').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
-                }
-            });
-            document.body.style.overflow = 'hidden';
-        });
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+        //         if (e.key === 'Enter') {
+        //             checkPassword();
+        //         }
+        //     });
+        //     document.body.style.overflow = 'hidden';
+        // });
 
         const menuData = {
             "categories": [
@@ -601,7 +601,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 1",
-                            "ingredients": "(2 فخد + 2 دبوس) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(2 فخد + 2 دبوس) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -611,7 +611,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 2",
-                            "ingredients": "(4 فخد ) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(4 فخد ) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -621,7 +621,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 3",
-                            "ingredients": "(4 دبوس) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(4 دبوس) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -631,7 +631,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 4",
-                            "ingredients": "(صدر + فخد + 2 دبوس ) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(صدر + فخد + 2 دبوس ) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -641,7 +641,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 5",
-                            "ingredients": "(2 صدر + 2 دبوس) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(2 صدر + 2 دبوس) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -651,7 +651,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 6",
-                            "ingredients": "(2 صدر + 2 فخد) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(2 صدر + 2 فخد) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -661,7 +661,7 @@
                         },
                         {
                             "title": "وجبه القرمشه 7",
-                            "ingredients": "(صدر + 2 دبوس + 2 كرسبي) + بطاطس + توميه + كلوسلو + 1 كيزر ميني",
+                            "ingredients": "(صدر + 2 دبوس + 2 كرسبي) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
                             "prices": [
                                 {
                                     "size": "وجبة",
@@ -1671,4 +1671,3 @@
 </body>
 
 </html>
-
