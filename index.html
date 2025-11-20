@@ -325,10 +325,10 @@
     </div>
 
     <script>
-        /Password protection
+        // Password protection
          function checkPassword() {
             const password = document.getElementById('passwordInput').value;
-        if (password === 'Astroworld') {
+        if (password === 'Rodeo') {
                document.getElementById('passwordOverlay').style.display = 'none';
                 document.body.style.overflow = 'auto';
             } else {
@@ -338,7 +338,6 @@
             }
          }
 
-         Add event listener for Enter key
          document.addEventListener('DOMContentLoaded', function () {
              document.getElementById('passwordInput').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
@@ -1671,5 +1670,4 @@
 </body>
 
 </html>
-
 
