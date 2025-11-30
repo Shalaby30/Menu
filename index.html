@@ -304,7 +304,6 @@
             <p id="errorMsg" style="color: red; margin-top: 10px; display: none;"></p>
         </div>
     </div>  -->
-    </div> 
 
     <h1>قائمة الطعام</h1>
 
@@ -327,25 +326,25 @@
 
     <script>
         // Password protection
-         function checkPassword() {
+        function checkPassword() {
             const password = document.getElementById('passwordInput').value;
-        if (password === 'Rodeo') {
-               document.getElementById('passwordOverlay').style.display = 'none';
+            if (password === 'Rodeo') {
+                document.getElementById('passwordOverlay').style.display = 'none';
                 document.body.style.overflow = 'auto';
             } else {
-              document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('errorMsg').style.display = 'block';
                 document.getElementById('passwordInput').value = '';
-                 document.getElementById('passwordInput').focus();
+                document.getElementById('passwordInput').focus();
             }
-         }
+        }
 
-         document.addEventListener('DOMContentLoaded', function () {
-             document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('passwordInput').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
-                     checkPassword();
+                    checkPassword();
                 }
-             });
-             document.body.style.overflow = 'hidden';
+            });
+            document.body.style.overflow = 'hidden';
         });
 
         const menuData = {
@@ -1466,6 +1465,32 @@
                                     "price": 190
                                 }
                             ]
+                        },
+                        {
+                            "title": "كبسه ربع شوايه",
+                            "ingredients": "ربع فرخه شوايه + زر كبسه + صوص دقوس + صوص زبادي ",
+                            "prices": [
+                                {
+                                    "size": "صدر",
+                                    "price": 120
+                                }, {
+                                    "size": "ورك",
+                                    "price": 110
+                                }
+                            ]
+                        },
+                        {
+                            "title": "كبسه ربع مشوي فحم",
+                            "ingredients": "ربع فرخه مشويه فحم + زر كبسه + صوص دقوس + صوص زبادي ",
+                            "prices": [
+                                {
+                                    "size": "صدر",
+                                    "price": 115
+                                }, {
+                                    "size": "ورك",
+                                    "price": 110
+                                }
+                            ]
                         }
                     ]
                 }
@@ -1671,6 +1696,3 @@
 </body>
 
 </html>
-
-
-
