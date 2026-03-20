@@ -741,9 +741,9 @@
         async function loadMenuData(){
             try{
                 const [categoriesData, itemsData, pricesData] = await Promise.all([
-                    api("categories?order=name"),
-                    api("items?order=title"),
-                    api("item_prices?order=price")
+                    api("categories?order=id"),
+                    api("items?order=id"),
+                    api("item_prices?order=id")
                 ])
 
                 if(!categoriesData || !itemsData || !pricesData){
