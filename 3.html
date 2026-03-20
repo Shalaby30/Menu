@@ -398,14 +398,6 @@
             color: #8b7355;
         }
 
-        .category-count {
-            background: #8b7355;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: normal;
-        }
 
         .category.hidden {
             display: none;
@@ -561,10 +553,6 @@
             color: #8b7355;
         }
 
-        body.night-mode .category-count {
-            background: #8b7355;
-            color: white;
-        }
 
         body.night-mode .highlight {
             background-color: #5a4a3a;
@@ -794,10 +782,7 @@
                 categoryDiv.dataset.category = category.name;
 
                 const categoryHeader = document.createElement('h2');
-                categoryHeader.innerHTML = `
-                ${category.name}
-                <span class="category-count">${categoryItems.length}</span>
-                `;
+                categoryHeader.textContent = category.name;
                 categoryDiv.appendChild(categoryHeader);
 
                 const itemList = document.createElement('div');
