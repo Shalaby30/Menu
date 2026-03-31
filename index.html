@@ -523,1542 +523,226 @@
         <div class="loading">جاري تحميل القائمة...</div>
     </div>
 
-    <script>
-        // Password protection
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === 'Rodeo') {
-                document.getElementById('passwordOverlay').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('passwordInput').focus();
-            }
-        }
+    <script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('passwordInput').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
-                }
-            });
-            document.body.style.overflow = 'hidden';
-        });
+const supabase = createClient(
+  "https://ucidmkupuclciyozeqcx.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjaWRta3VwdWNsY2l5b3plcWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzOTkyMTMsImV4cCI6MjA4OTk3NTIxM30.oBHpCicO7XC9ISWYMznjRCISx5EQ7hxqXtDnfDQZzVs"
+);
 
-        // Night Mode Toggle Functionality
-        const modeToggle = document.getElementById('modeToggle');
-        const body = document.body;
+// Password protection
+function checkPassword() {
+    const password = document.getElementById('passwordInput').value;
+    if (password === 'Rodeo') {
+        document.getElementById('passwordOverlay').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    } else {
+        document.getElementById('errorMsg').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+    }
+}
 
-        // Check for saved mode preference or default to light mode
-        const currentMode = localStorage.getItem('nightMode') || 'light';
-        if (currentMode === 'night') {
-            body.classList.add('night-mode');
-            modeToggle.textContent = '☀️';
-        }
-
-        modeToggle.addEventListener('click', function() {
-            body.classList.toggle('night-mode');
-            
-            if (body.classList.contains('night-mode')) {
-                modeToggle.textContent = '☀️';
-                localStorage.setItem('nightMode', 'night');
-            } else {
-                modeToggle.textContent = '🌙';
-                localStorage.setItem('nightMode', 'light');
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('passwordInput');
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
             }
         });
+    }
+});
 
-        const menuData = {
-            "categories": [
-            {
-                    "name": "العروض",
-                    "items": [
-                        {
-                            "title": "اون فاير (1)",
-                            "ingredients": "ربع فرخه + سيخ كفته لحم + رز + بطاطس + توميه ",
-                            "prices": [
-                                {
-                                    "size": "صدر",
-                                    "price": 175
-                                },
-                                {
-                                    "size": "ورك",
-                                    "price": 165
-                                }
-                            ]
-                        },
-                                            {
-                            "title": "اون فاير (2)",
-                            "ingredients": "ربع فرخه + سيخ شيش طاوك + رز + بطاطس + توميه ",
-                            "prices": [
-                                {
-                                    "size": "صدر",
-                                    "price": 175
-                                },
-                                {
-                                    "size": "ورك",
-                                    "price": 165
-                                }
-                            ]
-                        },
-                      {
-                            "title": "اون فاير (3)",
-                            "ingredients": "ربع فرخه + ½ سيخ كفته لحم + ½ سيخ شيش + رز + بطاطس + توميه ",
-                            "prices": [
-                                {
-                                    "size": "صدر",
-                                    "price": 175
-                                },
-                                {
-                                    "size": "ورك",
-                                    "price": 165
-                                }
-                            ]
-                        },
-                        {
-                            "title": "اون فاير (4)",
-                            "ingredients": "سيخ كفته لحم + سيخ شيش طاوك + رز + بطاطس + توميه ",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 155
-                                }
-                            ]
-                        },{
-                            "title": "الكينج",
-                            "ingredients": "ربع فرخه شوايه + 3 قطع عربي فراخ + رز + بطاطس + توميه + مخلل",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 170
-                                }
-                            ]
-                        },{
-                            "title": "اصحاب الارض",
-                            "ingredients": "ربع فرخه شوايه +2  قطعه ماريا ميكس + رز + بطاطس + توميه + مخلل",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 180
-                                }
-                            ]
-                        },
-                        {
-                            "title": "علي كلاي",
-                            "ingredients": "ربع فرخه شوايه + قطعه بروستد + قطعه كريسبي + رز + بطاطس + توميه + مخلل",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 195
-                                }
-                            ]
-                        },{
-                            "title": "النص التاني",
-                            "ingredients": "2 قطعه بروستد + 3 قطع عربي فراخ + رز + بطاطس + توميه + مخلل",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 180
-                                }
-                            ]
-                        },{
-                            "title": "صينيه الهديه الكرم",
-                            "ingredients": "ربع فرخه + قطعه بروستد + قطعه كريسبي + 3 قطع عربي فراخ + 2 مثلث ماريا + رز + توميه + مخلل",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 340
-                                }
-                            ]
-                        },{
-                            "title": "البخت",
-                            "ingredients": "ربع تكا + قطعه كفته لحم + 2 خرزه كباب + 3 ق عربي فراخ + رز + بطاطس + توميه",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 240
-                                }
-                            ]
-                        },
-                        {
-                            "title": "عين سحريه ",
-                            "ingredients": "ربع تكا + قطعه كفته لحم + 2 قطعه شيش + 2 قطعه ماريا + رز + بطاطس + توميه",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 220
-                                }
-                            ]
-                        },
+// Night Mode Toggle Functionality
+const modeToggle = document.getElementById('modeToggle');
+const body = document.body;
 
-                        {
-                            "title": "وحوش القرمشه (2)",
-                            "ingredients": "4 قطع بروستد (2 فخد + 2 دبوس) + 1 فته فراخ صغير + 1 فته لحمه صغير + بطاطس + توميه + كلوسلو + 2 كايزر",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 335
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وحوش القرمشه (3)",
-                            "ingredients": "4 قطع بروستد (2 فخد + 2 دبوس) + سندوتش شاورما فراخ سوري XL + سندوتش شاورما لحمه سوري XL + بطاطس + توميه + كلوسلو + 2 كايزر",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 355
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الماريا (اضافه الموتزريلا 30ج)",
-                    "items": [
-                        {
-                            "title": "ماريا فراخ",
-                            "ingredients": "شاورما فراخ + تومية سبايسي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 150
-                                }
-                            ]
-                        },
-                        {
-                            "title": "ماريا لحم",
-                            "ingredients": "شاورما لحمة + طحينة + بصل + بقدونس + دبس رمان",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 170
-                                }
-                            ]
-                        },
-                        {
-                            "title": "ماريا ميكس",
-                            "ingredients": "نص فراخ بصوص تومية + نص لحمة بصوص طحينة + بصل + بقدونس + دبس رمان ",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 160
-                                }
-                            ]
-                        },
-                        {
-                            "title": "ماريا تشيزي",
-                            "ingredients": "شاورما فراخ + تومية سبايسي + موتزاريلا + صوص شيدر",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 170
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الساندويتشات",
-                    "items": [
-                        {
-                            "title": "شاورما فراخ",
-                            "ingredients": "تومية + خيار مخلل",
-                            "prices": [
-                                {
-                                    "size": "سوري لارج",
-                                    "price": 95
-                                },
-                                {
-                                    "size": "سوري XL",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "كايزر",
-                                    "price": 70
-                                },
-                                {
-                                    "size": "فرنساوي",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "تنين",
-                                    "price": 170
-                                },
-                                {
-                                    "size": "تنين فرنساوي",
-                                    "price": 180
-                                }
-                            ]
-                        },
-                        {
-                            "title": "شاورما لحمة",
-                            "ingredients": "طحينة + لفت + بصل + بقدونس + دبس رمان + سماق + طماطم",
-                            "prices": [
-                                {
-                                    "size": "سوري لارج",
-                                    "price": 125
-                                },
-                                {
-                                    "size": "XL",
-                                    "price": 135
-                                },
-                                {
-                                    "size": "كايزر",
-                                    "price": 90
-                                },
-                                {
-                                    "size": "فرنساوي",
-                                    "price": 140
-                                },
-                                {
-                                    "size": "تنين سوري",
-                                    "price": 210
-                                },
-                                {
-                                    "size": "تنين فرنساوي",
-                                    "price": 215
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كرسبي",
-                            "ingredients": "مايونيز + شيدر + خس",
-                            "prices": [
-                                {
-                                    "size": "سوري / فرونساوي",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "تنين",
-                                    "price": 200
-                                }
-                            ]
-                        },
-                        {
-                            "title": "سوبريم كرسبي",
-                            "ingredients": "مايونيز + شيدر + خس + باربكيو + رومي مدخن",
-                            "prices": [
-                                {
-                                    "size": "لارج",
-                                    "price": 130
-                                },
-                                {
-                                    "size": "تنين",
-                                    "price": 220
-                                }
-                            ]
-                        },
-                        {
-                            "title": "زينجر",
-                            "ingredients": "مايونيز سبايسي + شيدر + خس",
-                            "prices": [
-                                {
-                                    "size": "سوري / فرونساوي",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "تنين",
-                                    "price": 200
-                                }
-                            ]
-                        },
-                        {
-                            "title": "سوبريم زينجر",
-                            "ingredients": "مايونيز سبايسي + شيدر + خس + باربكيو + رومي مدخن",
-                            "prices": [
-                                {
-                                    "size": "لارج",
-                                    "price": 130
-                                },
-                                {
-                                    "size": "تنين",
-                                    "price": 220
-                                }
-                            ]
-                        },
-                        {
-                            "title": "ديناصور",
-                            "ingredients": "قطع كرسبي + مايونيز + باربكيو + شيدر + رومي مدخن + خس + طماطم",
-                            "prices": [
-                                {
-                                    "size": "سنجل",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "دبل",
-                                    "price": 200
-                                },
-                                {
-                                    "size": "تربل",
-                                    "price": 280
-                                }
-                            ]
-                        },
-                        {
-                            "title": "برجر",
-                            "ingredients": "صوص بيج برجر + بصل + طماطم + خس + خيار مخلل",
-                            "prices": [
-                                {
-                                    "size": "سنجل",
-                                    "price": 125
-                                },
-                                {
-                                    "size": "جامبو",
-                                    "price": 180
-                                }
-                            ]
-                        },
-                        {
-                            "title": "بطاطس",
-                            "ingredients": "كلوسلو + توميه + كاتشب",
-                            "prices": [
-                                {
-                                    "size": "سوري",
-                                    "price": 45
-                                },
-                                {
-                                    "size": "فرنساوي",
-                                    "price": 50
-                                },
-                                {
-                                    "size": "اضافه موتزريلا",
-                                    "price": "15+"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "البروستد",
-                    "items": [
-                        {
-                            "title": "فرخة بروستد كاملة",
-                            "ingredients": "8 قطع ( 2 صدر - 2 فخد - 4 دبوس ) + تومية وسط + كلوسلو + بطاطس + عيش",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 480
-                                }
-                            ]
-                        },
-                        {
-                            "title": "نص فرخه (وجبه بيك الكرم)",
-                            "ingredients": "4 قطع ( صدر - فخد - 2 دبوس ) + تومية صغيرة + كلوسلو صغيرة + بطاطس + عيش",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 240
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبة قطعتين بروستد",
-                            "ingredients": "¼ فرخة (صدر أو ورك) + تومية + عيش",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 150
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 1",
-                            "ingredients": "(2 فخد + 2 دبوس) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 200
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 2",
-                            "ingredients": "(4 فخد ) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 205
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 3",
-                            "ingredients": "(4 دبوس) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 190
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 4",
-                            "ingredients": "(صدر + فخد + 2 دبوس ) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 245
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 5",
-                            "ingredients": "(2 صدر + 2 دبوس) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 265
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 6",
-                            "ingredients": "(2 صدر + 2 فخد) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 265
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه القرمشه 7",
-                            "ingredients": "(صدر + 2 دبوس + 2 كرسبي) + بطاطس + توميه + كلوسلو + 2 كيزر ميني",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 235
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الشواية",
-                    "items": [
-                        {
-                            "title": "فرخة شواية سوري",
-                            "ingredients": "فرخة مشوية + رز + بطاطس + تومية + مخلل + عيش",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 420
-                                }
-                            ]
-                        },
-                        {
-                            "title": "نص فرخة شواية سوري",
-                            "ingredients": "½ فرخة + رز + بطاطس + تومية + مخلل + عيش",
-                            "prices": [
-                                {
-                                    "size": "نص فرخة",
-                                    "price": 220
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الفتات",
-                    "items": [
-                        {
-                            "title": "فتة فراخ",
-                            "ingredients": "رز بسمتي + عيش محمص + تومية + شاورما فراخ",
-                            "prices": [
-                                {
-                                    "size": "S",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "M",
-                                    "price": 125
-                                },
-                                {
-                                    "size": "L",
-                                    "price": 165
-                                }
-                            ]
-                        },
-                        {
-                            "title": "فتة لحمة",
-                            "ingredients": "رز بسمتي + عيش محمص + طحينة + شاورما لحمة",
-                            "prices": [
-                                {
-                                    "size": "S",
-                                    "price": 120
-                                },
-                                {
-                                    "size": "M",
-                                    "price": 145
-                                },
-                                {
-                                    "size": "L",
-                                    "price": 190
-                                }
-                            ]
-                        },
-                        {
-                            "title": "فتة ميكس",
-                            "ingredients": "رز بسمتي + عيش محمص + نصفها فراخ + نصفها لحمة",
-                            "prices": [
-                                {
-                                    "size": "M",
-                                    "price": 135
-                                },
-                                {
-                                    "size": "L",
-                                    "price": 180
-                                }
-                            ]
-                        },
-                        {
-                            "title": "ريزو الكرم",
-                            "ingredients": "رز بسمتي + قطع كرسبي + صوص",
-                            "prices": [
-                                {
-                                    "size": "M",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "L",
-                                    "price": 170
-                                }
-                            ]
-                        },
-                        {
-                            "title": "قنبلة الكرم",
-                            "ingredients": "رز بسمتي + نصف شاورما فراخ + نصف كرسبي بصوص ريزو",
-                            "prices": [
-                                {
-                                    "size": "S",
-                                    "price": 110
-                                },
-                                {
-                                    "size": "M",
-                                    "price": 140
-                                },
-                                {
-                                    "size": "L",
-                                    "price": 175
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الكريبات",
-                    "items": [
-                        {
-                            "title": "كريب شاورما فراخ",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + تومية + جبن + شاورما فراخ",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 110
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب شاورما لحمة",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + طحينة + جبن + شاورما لحمة",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 130
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب بسطرمة",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + بسطرمة",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 100
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب بطاطس",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 65
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب سوسيس",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + سوسيس",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 85
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب سدق",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + سدق",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 90
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب مشكل لحوم",
-                            "ingredients": "سدق + بسطرمة + شاورما لحمة + سوسيس",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 130
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب كرسبي",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + مايونيز + جبن + كرسبي",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 120
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب زنجر",
-                            "ingredients": "فلفل + طماطم + زيتون + كاتشب + مايونيز سبايسي + جبن + زنجر",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 120
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب ماجنم",
-                            "ingredients": "شاورما فراخ + هالبينو + صوص شيدر + مايونيز",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 125
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب مشكل فراخ",
-                            "ingredients": "شاورما فراخ + كرسبي + صوص شيدر + تومية + باربكيو",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 120
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كريب شوكولاتة",
-                            "ingredients": "شوكولاتة",
-                            "prices": [
-                                {
-                                    "size": "عادي",
-                                    "price": 50
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الوجبات",
-                    "items": [
-                        {
-                            "title": "وجبة شاورما عربي سينجل",
-                            "ingredients": "ساندويتش XL سورى متقطع 5 قطع + عيش محمص + توميه + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 150
-                                },
-                                {
-                                    "size": "لحمة",
-                                    "price": 190
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبة شاورما عربي دبل",
-                            "ingredients": "2 ساندويتش XL سورى متقطع 10 قطع + عيش محمص + توميه + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 240
-                                },
-                                {
-                                    "size": "لحمة",
-                                    "price": 300
-                                },
-                                {
-                                    "size": "مكس",
-                                    "price": 280
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبة كرسبي/زينجر",
-                            "ingredients": "5 قطع + بطاطس + تومية + كلوسلو + عيش",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 210
-                                },
-                                {
-                                    "size": "بالرز",
-                                    "price": 225
-                                }
-                            ]
-                        },
-                        {
-                            "title": "بوكس الكرم",
-                            "ingredients": "5 ساندويتش XLمتقطعين 25 قطعه + بطاطس + تومية + عيش محمص",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 510
-                                },
-                                {
-                                    "size": "لحمة",
-                                    "price": 640
-                                },
-                                {
-                                    "size": "مكس",
-                                    "price": 580
-                                }
-                            ]
-                        },
-                        {
-                            "title": "بوكس الجوكر",
-                            "ingredients": "2 ساندويتش سورى اكس لارج مقطع 10 قطع + 4 قطع كرسبي + بطاطس + عيش محمص + صوصات",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 390
-                                },
-                                {
-                                    "size": "مكس",
-                                    "price": 410
-                                }
-                            ]
-                        },
-                        {
-                            "title": "بوكس الصحاب",
-                            "ingredients": "4 ساندويتش كايزر+ بطاطس + تومية + عيش محمص",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 300
-                                },
-                                {
-                                    "size": "لحمة",
-                                    "price": 370
-                                },
-                                {
-                                    "size": "مكس",
-                                    "price": 410
-                                }
-                            ]
-                        },
-                        {
-                            "title": "بوكس المعلم",
-                            "ingredients": "10 سندوتشات (كل واحد 10 سم ) + بطاطس + توميه + عيش محمص",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 400
-                                },
-                                {
-                                    "size": "فراخ ولحمه",
-                                    "price": 425
-                                },
-                                {
-                                    "size": "فراخ كرسبي",
-                                    "price": 400
-                                }
-                            ]
-                        },
-                        {
-                            "title": "بوكس ابن المعلم",
-                            "ingredients": "4 سندوتشات (كل واحد 10 سم ) + بطاطس + توميه + عيش محمص",
-                            "prices": [
-                                {
-                                    "size": "فراخ",
-                                    "price": 180
-                                },
-                                {
-                                    "size": "فراخ ولحمه",
-                                    "price": 200
-                                },
-                                {
-                                    "size": "فراخ كرسبي ",
-                                    "price": 180
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "مشويات",
-                  "note": "(فيصل/ الف مسكن/ زهراء المعادي/ طلعت/ اكتوبر/ المنصوره/ المنتزه/ الدليفري/ سوتر /العاشر)",
-                    "items": [
-                        {
-                            "title": "فرخه تكا",
-                            "ingredients": "فرخة مشوية علي فحم بالعضم + رز + بطاطس + تومية + مخلل + 4 عيش",
-                            "prices": [
-                                {
-                                    "size": "كاملة",
-                                    "price": 400
-                                }
-                            ]
-                        },
-                        {
-                            "title": "نص فرخة تكا",
-                            "ingredients": "½ فرخة مشوية علي فحم بالعضم + رز + بطاطس + تومية + مخلل + عيش",
-                            "prices": [
-                                {
-                                    "size": "نص فرخة",
-                                    "price": 210
-                                }
-                            ]
-                        },
-                        {
-                            "title": "ربع فرخة تكا",
-                            "ingredients": "ربع فرخة مشوية علي فحم بالعضم (صدر او ررك) + رز + بطاطس + تومية + مخلل + عيش",
-                            "prices": [
-                                {
-                                    "size": "صدر",
-                                    "price": 135
-                                }, {
-                                    "size": "ورك",
-                                    "price": 125
-                                }
-                            ]
-                        },
-                        {
-                            "title": "فرخه مخلي",
-                            "ingredients": "فرخة مشوية علي فحم مخلي من العضم + رز + بطاطس + تومية + مخلل + 4 عيش",
-                            "prices": [
-                                {
-                                    "size": "كاملة",
-                                    "price": 410
-                                }
-                            ]
-                        },
-                        {
-                            "title": "نص فرخة مخلي",
-                            "ingredients": "½ فرخة مشوية علي فحم مخلي من العضم + رز + بطاطس + تومية + مخلل + عيش",
-                            "prices": [
-                                {
-                                    "size": "نص فرخة",
-                                    "price": 220
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه كباب",
-                            "ingredients": "2 سيخ كباب + رز + بطاطس + 1 عيش + مخلل + توميه",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 290
-                                }
-                            ]
-                        }, {
-                            "title": "½ كباب",
-                            "ingredients": "4 سيخ كباب + رز + بطاطس + 1 عيش + مخلل + توميه",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 550
-                                }
-                            ]
-                        },
-                        {
-                            "title": "½ كفته لحم",
-                            "ingredients": "4 سيخ كفته + بطاطس + 2 عيش + مخلل + توميه + طحينه",
-                            "prices": [
-                                {
-                                    "size": "نص كيلو",
-                                    "price": 360
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه كفته لحم",
-                            "ingredients": "2 سيخ كفته + رز + بطاطس + 1 عيش + مخلل + توميه",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 190
-                                }
-                            ]
-                        },
-                        {
-                            "title": "½ شيش طاووك",
-                            "ingredients": "4 سيخ شيش طاووك+ بطاطس + 2 عيش + مخلل + توميه + طحينه",
-                            "prices": [
-                                {
-                                    "size": "نص كيلو",
-                                    "price": 350
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه شيش طاووك",
-                            "ingredients": "2 سيخ طاووك+ رز + بطاطس + 1 عيش + مخلل + توميه",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 190
-                                }
-                            ]
-                        },
-                        {
-                            "title": "½ مشكل كباب وكفته لحم",
-                            "ingredients": "2 سيخ كفته لحم + 2 سيخ كباب + بطاطس + 2 عيش + مخلل + توميه + طحينه",
-                            "prices": [
-                                {
-                                    "size": "نص كيلو",
-                                    "price": 470
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه مشكل كباب وكفته لحم",
-                            "ingredients": "سيخ كفته لحم + سيخ كباب + بطاطس + 1 عيش + مخلل + توميه + رز",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 255
-                                }
-                            ]
-                        },
-                        {
-                            "title": "½ ميكس جريل لحم",
-                            "ingredients": "2 سيخ كفته لحم + سيخ كباب + سيخ شيش طاووق + بطاطس + 2 عيش + مخلل + توميه + طحينه",
-                            "prices": [
-                                {
-                                    "size": "نص كيلو",
-                                    "price": 390
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه ميكس جريل لحم",
-                            "ingredients": "سيخ كفته لحم + سيخ كباب + سيخ شيش طاووق + بطاطس + 1 عيش + مخلل + توميه + رز",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 285
-                                }
-                            ]
-                        },
-                        {
-                            "title": "½ كفته فراخ",
-                            "ingredients": "4 سيخ كفته فراخ + بطاطس + 2 عيش + مخلل + توميه + طحينه",
-                            "prices": [
-                                {
-                                    "size": "نص كيلو",
-                                    "price": 0
-                                }
-                            ]
-                        },
-                        {
-                            "title": "وجبه كفته فراخ",
-                            "ingredients": "2 سيخ كفته فراخ + رز + بطاطس + 1 عيش + مخلل + توميه",
-                            "prices": [
-                                {
-                                    "size": "وجبة",
-                                    "price": 0
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "الصواني",
-                    "items": [
-                        {
-                            "title": "صينية الأبطال",
-                            "ingredients": "½ فرخة شواية + 750 جم شاورما فراخ + كيلو رز + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 800
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية الأسود",
-                            "ingredients": "½ فرخة شواية + 4 كرسبي + 4 بروستد (2 فخد + 2 دبوس) + شاورما فراخ + رز + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 920
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية الوحوش",
-                            "ingredients": "4 كرسبي + 4 بروستيد + 4 ساندوتشات فراخ إكس لارج متقطعين عربي + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 770
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية الحريفة *",
-                            "ingredients": "فرخة مشوية تكا + ½ كيلو كفتة + ½ كيلو شيش + رز ",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 820
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية مكس الماريا",
-                            "ingredients": "٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٣ قطع كرسبي + ٣ قطع بروستد + بطاطس",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 500
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية الكرسبي",
-                            "ingredients": "12 قطعة كرسبي + ½ كيلو رز بسمتي + ¼ كيلو بطاطس + تومية + 2 كيس عيش",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 500
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية البروستد",
-                            "ingredients": "½ كيلو رز + 10 قطع بروستيد (فخد ودبوس) + ¼ كيلو بطاطس + تومية + 2 كيس عيش",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 570
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية مكس القرمشة",
-                            "ingredients": "5 كرسبي + 5 بروستيد + ½ كيلو رز بسمتي + ¼ كيلو بطاطس + تومية + 2 كيس عيش",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 520
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية مكس شاورما",
-                            "ingredients": "٣ مثلثات ماريا فراخ + ٣ مثلثات ماريا لحم + ٦ قطع عربي فراخ + ٦ قطع عربي لحم + بطاطس + تومية كبيرة",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 470
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية المشاوي *",
-                            "ingredients": "5 ورك مشوي تكا + رز بسمتي + بطاطس + 2 كيس عيش + طحينة",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 500
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية مكس مشاوي *",
-                            "ingredients": "4 ورك مشوي + 2 كفتة + بطاطس + رز + 2 كيس عيش + طحينة",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 550
-                                }
-                            ]
-                        },
-                        {
-                            "title": "صينية ملوك الدلع",
-                            "ingredients": "4 ورك + رز",
-                            "prices": [
-                                {
-                                    "size": "صينية",
-                                    "price": 310
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "كبسه",
-                    "items": [
-                        {
-                            "title": "كبسه شاورما فراخ",
-                            "ingredients": "شاورما فراخ+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 165
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه شاورما لحمه",
-                            "ingredients": "شاورما لحمه+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 185
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه دجاج سوري",
-                            "ingredients": " نص فرخه شوايه + زر كبسه + صوص دقوس + صوص زبادي ",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 230
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه شاورما ميكس",
-                            "ingredients": "شاورما فراخ + شاورما لحمه+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 175
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه دجاج تكا",
-                            "ingredients": "نص فرخه تكا+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 230
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه 4 وراك",
-                            "ingredients": "4 وراك + زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 310
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه شيش طاووك",
-                            "ingredients": "2 سيخ شيش طاووك+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 180
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه مسحب مشوي",
-                            "ingredients": " نص فرخه مخليه+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 230
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه كفته تركي",
-                            "ingredients": "2 سيخ كفته+ زر كبسه + صوص دقوس + صوص زبادي",
-                            "prices": [
-                                {
-                                    "size": "0",
-                                    "price": 210
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه ربع شوايه",
-                            "ingredients": "ربع فرخه شوايه + زر كبسه + صوص دقوس + صوص زبادي ",
-                            "prices": [
-                                {
-                                    "size": "صدر",
-                                    "price": 140
-                                }, {
-                                    "size": "ورك",
-                                    "price": 130
-                                }
-                            ]
-                        },
-                        {
-                            "title": "كبسه ربع مشوي فحم",
-                            "ingredients": "ربع فرخه مشويه فحم + زر كبسه + صوص دقوس + صوص زبادي ",
-                            "prices": [
-                                {
-                                    "size": "صدر",
-                                    "price": 135
-                                }, {
-                                    "size": "ورك",
-                                    "price": 125
-                                }
-                            ]
-                        }
-                    ]
-                 }
-                // ,{
-                //     "name": "بيتزا",
-                //     "items": [
-                //         {
-                //             "title": "بيتزا شاورما ",
-                //             "ingredients": "صلصه + موتزريلا + شاورما  + فلفل + زيتون + طماطم + صوص رانش",
-                //             "prices": [
-                //                 {
-                //                     "size": "شاورما فراخ",
-                //                     "price": 150
-                //                 },
-                //                 {
-                //                     "size": "شاورما لحمه",
-                //                     "price": 170
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا شاورما اكسترا مشروم",
-                //             "ingredients": "توميه + موتزريلا + قطع مشروم + صوص فلفل حلو + خيار مخلل + صوص رانش",
-                //             "prices": [
-                //                 {
-                //                     "size": "شاورما فراخ",
-                //                     "price": 150
-                //                 },
-                //                 {
-                //                     "size": "شاورما لحمه",
-                //                     "price": 170
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا شاورما فراخ مانجا",
-                //             "ingredients": "صلصله بيتزا + موتزريلا + فلفل + زيتون + طماطم + صوص سويت تشيلي مانجا + صوص رانش",
-                //             "prices": [
-                //                 {
-                //                     "size": "0",
-                //                     "price": 160
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا كرسبي",
-                //             "ingredients": "صلصه  + موتزريلا + قطع كرسبي + فلفل + زيتون + طماطم + رومي مدخن + صوص رانش + مايونيز + باربكيو",
-                //             "prices": [
-                //                 {
-                //                     "size": "0",
-                //                     "price": 150
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا فاهيتا",
-                //             "ingredients": "صلصه + موتزريلا + فاهيتا بالخضار + فلفل + طماطم + مايونيز + باربكيو + صوص رانش + رومي مدخن",
-                //             "prices": [
-                //                 {
-                //                     "size": "0",
-                //                     "price": 130
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا ميكس  فراخ ",
-                //             "ingredients": "صلصه + موتزريلا+ قطع كرسبي + شاورما فراخ + فلفل + زيتون + طماطم + مايونيز + رانش + باربكيو + رومي مدخن",
-                //             "prices": [
-                //                 {
-                //                     "size": "0",
-                //                     "price": 160
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا قطع دجاج",
-                //             "ingredients": "صلصه + موتزريلا + قطع فراخ علي جريل + فلفل + زيتون + طماطم + مايونيز + رانش + باربكيو + رومي مدخن",
-                //             "prices": [
-                //                 {
-                //                     "size": "0",
-                //                     "price": 150
-                //                 }
-                //             ]
-                //         },
-                //         {
-                //             "title": "بيتزا ميكس لحوم",
-                //             "ingredients": "صلصه + موتزريلا + بسطرمه + سجق + سوسيس + بيبروني + فلفل + زيتون + طماطم + مايونيز + رانش + رومي مدخن",
-                //             "prices": [
-                //                 {
-                //                     "size": "0",
-                //                     "price": 160
-                //                 }
-                //             ]
-                //         }
-                //     ]
-                // }
-            ]
+// Check for saved mode preference or default to light mode
+const currentMode = localStorage.getItem('nightMode') || 'light';
+if (currentMode === 'night') {
+    body.classList.add('night-mode');
+    modeToggle.textContent = '☀️';
+}
+
+modeToggle.addEventListener('click', function() {
+    body.classList.toggle('night-mode');
+    
+    if (body.classList.contains('night-mode')) {
+        modeToggle.textContent = '☀️';
+        localStorage.setItem('nightMode', 'night');
+    } else {
+        modeToggle.textContent = '🌙';
+        localStorage.setItem('nightMode', 'light');
+    }
+});
+
+let menuData = { categories: [] };
+let currentFilter = 'all';
+
+// Load menu data from Supabase
+async function loadMenuFromSupabase() {
+    try {
+        const { data: categories, error: categoriesError } = await supabase
+            .from("categories")
+            .select(`
+                id,
+                name,
+                items (
+                    id,
+                    title,
+                    ingredients,
+                    prices
+                )
+            `);
+
+        if (categoriesError) {
+            console.error('Error loading categories:', categoriesError);
+            document.getElementById('menuContainer').innerHTML = '<div class="loading">في مشكلة في تحميل القائمة</div>';
+            return;
         }
 
-
-        let currentFilter = 'all';
-
+        menuData.categories = categories || [];
         initializeMenu();
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('menuContainer').innerHTML = '<div class="loading">في مشكلة في التحميل</div>';
+    }
+}
 
-        function initializeMenu() {
-            // Generate filter buttons
-            const filterButtons = document.getElementById('filterButtons');
-            menuData.categories.forEach(category => {
-                const btn = document.createElement('button');
-                btn.className = 'filter-btn';
-                btn.dataset.category = category.name;
-                btn.textContent = category.name;
-                filterButtons.appendChild(btn);
-            });
+// Initialize menu when page loads
+loadMenuFromSupabase();
 
-            // Generate menu HTML
-            const menuContainer = document.getElementById('menuContainer');
-            menuContainer.innerHTML = '';
+function initializeMenu() {
+    if (menuData.categories.length === 0) {
+        return; // Don't initialize if data is not loaded yet
+    }
+    
+    // Generate filter buttons
+    const filterButtons = document.getElementById('filterButtons');
+    menuData.categories.forEach(category => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.category = category.name;
+        btn.textContent = category.name;
+        filterButtons.appendChild(btn);
+    });
 
-            menuData.categories.forEach(category => {
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'category';
-                categoryDiv.dataset.category = category.name;
+    // Generate menu HTML
+    const menuContainer = document.getElementById('menuContainer');
+    menuContainer.innerHTML = '';
 
-                const categoryHeader = document.createElement('h2');
-                categoryHeader.textContent = category.name;
-                categoryDiv.appendChild(categoryHeader);
+    menuData.categories.forEach(category => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        categoryDiv.dataset.category = category.name;
 
-                // Add category note if exists
-                if (category.note) {
-                    const noteP = document.createElement('p');
-                    noteP.className = 'category-note';
-                    noteP.textContent = category.note;
-                    categoryDiv.appendChild(noteP);
-                }
+        const categoryHeader = document.createElement('h2');
+        categoryHeader.textContent = category.name;
+        categoryDiv.appendChild(categoryHeader);
 
-                const itemList = document.createElement('div');
-                itemList.className = 'item-list';
-
-                category.items.forEach(item => {
-                    const itemDiv = document.createElement('div');
-
-                    const isSinglePrice = item.prices.length === 1;
-                    itemDiv.className = isSinglePrice ? 'item single-price' : 'item multi-price';
-
-                    if (isSinglePrice) {
-                        const titleDiv = document.createElement('div');
-                        titleDiv.className = 'item-title-with-price';
-                        titleDiv.innerHTML = `
-                            <span>${item.title}</span>
-                            <span class="inline-price">${item.prices[0].price} ج</span>
-                        `;
-                        itemDiv.appendChild(titleDiv);
-                    } else {
-                        const titleDiv = document.createElement('div');
-                        titleDiv.className = 'item-title';
-                        titleDiv.textContent = item.title;
-                        itemDiv.appendChild(titleDiv);
-                    }
-
-                    if (!isSinglePrice) {
-                        const priceTable = document.createElement('div');
-                        priceTable.className = 'price-table';
-                        item.prices.forEach(price => {
-                            const priceRow = document.createElement('div');
-                            priceRow.className = 'price-row';
-                            priceRow.innerHTML = `
-                                <span class="price-size">${price.size}</span>
-                                <span class="price-amount">${price.price} ج</span>
-                            `;
-                            priceTable.appendChild(priceRow);
-                        });
-                        itemDiv.appendChild(priceTable);
-                    }
-
-                    // Ingredients
-                    const contentDiv = document.createElement('div');
-                    contentDiv.className = 'item-content';
-                    contentDiv.textContent = item.ingredients;
-                    itemDiv.appendChild(contentDiv);
-
-                    
-                    if (!isSinglePrice) {
-                        itemDiv.addEventListener('click', function (e) {
-                            this.classList.toggle('show-ingredients');
-                        });
-                    }
-
-                    itemList.appendChild(itemDiv);
-                });
-
-                categoryDiv.appendChild(itemList);
-                menuContainer.appendChild(categoryDiv);
-            });
-
-            // Setup event listeners
-            setupEventListeners();
-            performSearch('');
+        // Add category note if exists
+        if (category.note !== undefined && category.note !== null) {
+            const noteP = document.createElement('p');
+            noteP.className = 'category-note';
+            noteP.textContent = category.note;
+            categoryDiv.appendChild(noteP);
         }
+
+        const itemList = document.createElement('div');
+        itemList.className = 'item-list';
+
+        category.items.forEach(item => {
+            const itemDiv = document.createElement('div');
+
+            const isSinglePrice = item.prices.length === 1;
+            itemDiv.className = isSinglePrice ? 'item single-price' : 'item multi-price';
+
+            if (isSinglePrice) {
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'item-title-with-price';
+                titleDiv.innerHTML = `
+                    <span>${item.title}</span>
+                    <span class="inline-price">${item.prices[0].price} ج</span>
+                `;
+                itemDiv.appendChild(titleDiv);
+            } else {
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'item-title';
+                titleDiv.textContent = item.title;
+                itemDiv.appendChild(titleDiv);
+            }
+
+            if (!isSinglePrice) {
+                const priceTable = document.createElement('div');
+                priceTable.className = 'price-table';
+                item.prices.forEach(price => {
+                    const priceRow = document.createElement('div');
+                    priceRow.className = 'price-row';
+                    priceRow.innerHTML = `
+                        <span class="price-size">${price.size}</span>
+                        <span class="price-amount">${price.price} ج</span>
+                    `;
+                    priceTable.appendChild(priceRow);
+                });
+                itemDiv.appendChild(priceTable);
+            }
+
+            // Ingredients
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'item-content';
+            contentDiv.textContent = item.ingredients;
+            itemDiv.appendChild(contentDiv);
+
+            
+            if (!isSinglePrice) {
+                itemDiv.addEventListener('click', function (e) {
+                    this.classList.toggle('show-ingredients');
+                });
+            }
+
+            itemList.appendChild(itemDiv);
+        });
+
+        categoryDiv.appendChild(itemList);
+        menuContainer.appendChild(categoryDiv);
+    });
+
+    // Setup event listeners
+    setupEventListeners();
+    performSearch('');
+}
 
         function setupEventListeners() {
-            const searchInput = document.getElementById('searchInput');
-            const clearBtn = document.getElementById('clearBtn');
-            const filterBtns = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearBtn');
+    const filterBtns = document.querySelectorAll('.filter-btn');
 
-            // Search input
-            searchInput.addEventListener('input', function () {
-                const query = this.value.toLowerCase().trim();
-                clearBtn.style.display = query ? 'block' : 'none';
-                performSearch(query);
-            });
+    // Search input
+    searchInput.addEventListener('input', function () {
+        const query = this.value.toLowerCase().trim();
+        clearBtn.style.display = query ? 'block' : 'none';
+        performSearch(query);
+    });
 
-            // Clear search
-            clearBtn.addEventListener('click', function () {
-                searchInput.value = '';
-                clearBtn.style.display = 'none';
-                performSearch('');
-            });
+    // Clear search
+    clearBtn.addEventListener('click', function () {
+        searchInput.value = '';
+        clearBtn.style.display = 'none';
+        performSearch('');
+    });
 
-            // Filter buttons
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function () {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.dataset.category;
-                    performSearch(searchInput.value.toLowerCase().trim());
-                });
-            });
-        }
+    // Filter buttons
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.dataset.category;
+            performSearch(searchInput.value.toLowerCase().trim());
+        });
+    });
+}
 
 window.addEventListener("load", function () {
     setTimeout(function () {
@@ -2071,76 +755,75 @@ window.addEventListener("load", function () {
     }, 2000); // 4 seconds
 });
 
-        function performSearch(query) {
-            const items = document.querySelectorAll('.item');
-            const categories = document.querySelectorAll('.category');
-            const searchInfo = document.getElementById('searchInfo');
+function performSearch(query) {
+    const items = document.querySelectorAll('.item');
+    const categories = document.querySelectorAll('.category');
+    const searchInfo = document.getElementById('searchInfo');
 
-            let visibleItems = 0;
-            let visibleCategories = 0;
+    let visibleItems = 0;
+    let visibleCategories = 0;
 
-            categories.forEach(category => {
-                const categoryName = category.dataset.category;
-                const categoryItems = category.querySelectorAll('.item');
-                let categoryVisibleItems = 0;
+    categories.forEach(category => {
+        const categoryName = category.dataset.category;
+        const categoryItems = category.querySelectorAll('.item');
+        let categoryVisibleItems = 0;
 
-                const showCategory = currentFilter === 'all' || currentFilter === categoryName;
+        const showCategory = currentFilter === 'all' || currentFilter === categoryName;
 
-                if (showCategory) {
-                    categoryItems.forEach(item => {
-                        const titleElement = item.querySelector('.item-title') || item.querySelector('.item-title-with-price');
-                        const contentElement = item.querySelector('.item-content');
+        if (showCategory) {
+            categoryItems.forEach(item => {
+                const titleElement = item.querySelector('.item-title') || item.querySelector('.item-title-with-price');
+                const contentElement = item.querySelector('.item-content');
 
-                        const title = titleElement ? titleElement.textContent.toLowerCase() : '';
-                        const content = contentElement ? contentElement.textContent.toLowerCase() : '';
+                const title = titleElement ? titleElement.textContent.toLowerCase() : '';
+                const content = contentElement ? contentElement.textContent.toLowerCase() : '';
 
-                        if (!query || title.includes(query) || content.includes(query)) {
-                            item.style.display = 'block';
-                            categoryVisibleItems++;
-                            visibleItems++;
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-
-                    if (categoryVisibleItems > 0) {
-                        category.classList.remove('hidden');
-                        visibleCategories++;
-                    } else {
-                        category.classList.add('hidden');
-                    }
+                if (!query || title.includes(query) || content.includes(query)) {
+                    item.style.display = 'block';
+                    categoryVisibleItems++;
+                    visibleItems++;
                 } else {
-                    category.classList.add('hidden');
-                    categoryItems.forEach(item => item.style.display = 'none');
+                    item.style.display = 'none';
                 }
             });
 
-            updateSearchInfo(query, visibleItems, visibleCategories);
-        }
-
-        function updateSearchInfo(query, visibleItems, visibleCategories) {
-            const searchInfo = document.getElementById('searchInfo');
-            let message = '';
-
-            if (query) {
-                message = `تم العثور على ${visibleItems} صنف`;
-                if (currentFilter !== 'all') {
-                    message += ` في فئة ${currentFilter}`;
-                }
-            } else if (currentFilter !== 'all') {
-                message = `عرض فئة ${currentFilter}`;
+            if (categoryVisibleItems > 0) {
+                category.classList.remove('hidden');
+                visibleCategories++;
             } else {
-                message = '';
+                category.classList.add('hidden');
             }
-
-            searchInfo.textContent = message;
+        } else {
+            category.classList.add('hidden');
+            categoryItems.forEach(item => item.style.display = 'none');
         }
+    });
+
+    updateSearchInfo(query, visibleItems, visibleCategories);
+}
+
+function updateSearchInfo(query, visibleItems, visibleCategories) {
+    const searchInfo = document.getElementById('searchInfo');
+    let message = '';
+
+    if (query) {
+        message = `تم العثور على ${visibleItems} صنف`;
+        if (currentFilter !== 'all') {
+            message += ` في فئة ${currentFilter}`;
+        }
+    } else if (currentFilter !== 'all') {
+        message = `عرض فئة ${currentFilter}`;
+    } else {
+        message = '';
+    }
+
+    searchInfo.textContent = message;
+}
     </script>
 
 </body>
 
 </html>
-
 
 
 
